@@ -38,6 +38,12 @@ public:
 	void Sort(int* data, int size);
 };
 
+class ShellSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
+
 class QuickSort :public SortingAlgorithm
 {
 public:

@@ -97,7 +97,7 @@ namespace SortingTest {
 	
 
 	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Sorter* s = new Sorter(new CombSort());
+		Sorter* s = new Sorter(new ShellSort());
 		s->SortData(testarray, TESTSIZE);
 		delete s;
 		for (int i = 0; i < TESTSIZE; i++)

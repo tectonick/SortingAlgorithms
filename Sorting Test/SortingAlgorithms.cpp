@@ -59,21 +59,39 @@ void InsertionSort::Sort(int* data, int size)
 	for (size_t i = 1; i < size; i++)
 	{
 		int current = data[i];
-		for (int j = i-1; j >= 0; j--)
-		{			
-			if (current <data[j])
-			{
-				data[j + 1] = data[j];
-			}
-			else
-			{
-				data[j+1] = current;
-				break;
-			}
+		int j = i - 1;
+		while ((j>=0)&&(current<data[j]))
+		{
+			data[j + 1] = data[j];
+			j--;
 		}
+		data[j + 1] = current;
 		
 	}
 }
+
+void ShellSort::Sort(int* data, int size)
+{
+	int step = size/2;
+	while (step > 0)
+	{
+		for (size_t i = 1; i < size; i++)
+		{
+			int current = data[i];
+			int j = i - 1;
+			while ((j >= 0) && (current < data[j]))
+			{
+				data[j + 1] = data[j];
+				j--;
+			}
+			data[j + 1] = current;
+
+		}
+		step = step / 2;
+	}
+}
+
+
 
 void QuickSort::Sort(int* data, int size)
 {
@@ -177,3 +195,4 @@ void CombSort::Sort(int* data, int size)
 	} while (SwapHappened);
 
 }
+
