@@ -52,7 +52,27 @@ private:
 	void RecursiveSort(int* data,int begin, int end);
 };
 
+class TreeSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
 
+class HeapSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+private:
+	void SiftDown(int* data, int begin, int end);
+};
+
+class MergeSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+private:
+	void RecursiveSort(int* data, int begin, int end);
+};
 
 class Sorter
 {
