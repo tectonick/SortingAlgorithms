@@ -9,9 +9,9 @@ class StateKeeper
 public:
 	vector<short*> * States;
 	void SaveCurrentState(short* data, short size);
-	short* GetState(short i);
+	short* GetState(int i);
 	void ClearStates();
-	short StatesCount();
+	int StatesCount();
 	StateKeeper();
 	~StateKeeper();
 };

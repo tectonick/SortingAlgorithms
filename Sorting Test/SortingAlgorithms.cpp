@@ -11,7 +11,7 @@ void StateKeeper::SaveCurrentState(short* data, short size)
 	
 }
 
-short* StateKeeper::GetState(short i)
+short* StateKeeper::GetState(int i)
 {
 	return States->at(i);
 }
@@ -21,7 +21,7 @@ void StateKeeper::ClearStates()
 	States->clear();
 }
 
-short StateKeeper::StatesCount()
+int StateKeeper::StatesCount()
 {
 	return States->size();
 }
