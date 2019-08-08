@@ -377,7 +377,7 @@ void HeapSort::Sort(int* data, int size)
 	States.SaveCurrentState(data, size);
 	for (int i = size/2; i >= 0; i--)
 	{
-		SiftDown(data,size, i, size);
+		SiftDown(data,size, i, size-1);
 		
 	}
 
@@ -385,7 +385,7 @@ void HeapSort::Sort(int* data, int size)
 	while (end > 0) {
 		swap(&data[0], &data[end]);
 		States.SaveCurrentState(data, size);
-		SiftDown(data,size, 0, end);
+		SiftDown(data,size, 0, end-1);
 		end--;
 	}
 
@@ -396,21 +396,36 @@ void HeapSort::SiftDown(int* data, int size, int begin, int end)
 	int current = begin;
 	while (current<=end/2)
 	{
-		if ((current * 2 + 1 < end) && (data[current] < data[2 * current + 1]))
+		if (current * 2 + 2 <= end)
 		{
-			swap(&data[current], &data[2 * current + 1]);
+			int maxi = current * 2 + 1;
+			if (data[current * 2 + 1] < data[2 * current + 2])
+			{
+				maxi = 2 * current + 2;
+			}
+
+			if ((data[current] < data[maxi]))
+			{
+				swap(&data[current], &data[maxi]);
+				current = maxi;
+			}
+			else { break; }
 			States.SaveCurrentState(data, size);
-			current = 2 * current + 1;
-		} else
-		if ((current * 2 + 2 < end) && (data[current] < data[2 * current + 2]))
+		}
+		else if(current * 2 + 1 <= end)
 		{
-			swap(&data[current], &data[2 * current + 2]);
-			States.SaveCurrentState(data, size);
-			current = 2 * current + 2;
+			if ((data[current] < data[current * 2 + 1]))
+			{
+				swap(&data[current], &data[current * 2 + 1]);
+				current = current * 2 + 1;
+				States.SaveCurrentState(data, size);
+			}
+			else break;
 		}
 		else {
 			break;
 		}
+
 	}
 
 }
