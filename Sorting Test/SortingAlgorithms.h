@@ -14,6 +14,14 @@ public:
 };
 
 
+class SelectionSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
+
+
+
 class Sorter
 {
 public:
@@ -24,19 +32,6 @@ private:
 	SortingAlgorithm * Algorithm;
 };
 
-Sorter::Sorter(SortingAlgorithm* alg):Algorithm(alg)
-{
-}
-
-
-Sorter::~Sorter()
-{
-}
-
-void Sorter::SortData(int* data, int size)
-{
-	Algorithm->Sort(data, size);
-}
 
 
 
