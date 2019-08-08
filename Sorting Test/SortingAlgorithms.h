@@ -13,6 +13,18 @@ public:
 	void Sort(int * data, int size);
 };
 
+class CoctailSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
+
+
+class CombSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
 
 class SelectionSort :public SortingAlgorithm
 {

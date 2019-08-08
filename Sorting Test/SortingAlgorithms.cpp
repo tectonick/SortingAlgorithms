@@ -29,7 +29,6 @@ void BubbleSort::Sort(int* data, int size)
 		SwapHappened = false;
 		for (int i = 0; i < size - 1; i++)
 		{
-			int tmp;
 			if (data[i + 1] < data[i])
 			{
 				swap(&data[i], &data[i+1]);
@@ -112,4 +111,69 @@ void QuickSort::RecursiveSort(int* data, int begin, int end)
 		RecursiveSort(data, center + 1, end);
 	}
 	
+}
+
+void CoctailSort::Sort(int* data, int size)
+{
+	bool SwapHappened;
+	int begin = 0;
+	int end = size;
+	do {
+		SwapHappened = false;
+		for (int i = begin; i < end - 1; i++)
+		{
+			if (data[i + 1] < data[i])
+			{
+				swap(&data[i], &data[i + 1]);
+				SwapHappened = true;
+			}
+		}
+		end--;
+		if (!SwapHappened)
+		{
+			break;
+		}
+		SwapHappened = false;
+		for (int i = end-1; i >= 0; i--)
+		{
+			if (data[i + 1] < data[i])
+			{
+				swap(&data[i], &data[i + 1]);
+				SwapHappened = true;
+			}
+		}
+		begin++;
+	} while (SwapHappened);
+}
+
+void CombSort::Sort(int* data, int size)
+{
+	double decreaseFactor = 1.247;
+	int step = size / decreaseFactor;
+
+	while (step>1)
+	{
+		for (int i = 0; i < size - step; i++)
+		{
+			if (data[i +step] < data[i])
+			{
+				swap(&data[i], &data[i + step]);
+			}
+		}
+		step = step / decreaseFactor;
+	}
+	
+	bool SwapHappened;
+	do {
+		SwapHappened = false;
+		for (int i = 0; i < size - 1; i++)
+		{
+			if (data[i + 1] < data[i])
+			{
+				swap(&data[i], &data[i + 1]);
+				SwapHappened = true;
+			}
+		}
+	} while (SwapHappened);
+
 }
