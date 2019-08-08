@@ -1,6 +1,12 @@
 #include "SortingAlgorithms.h"
 
 
+void swap(int* a, int* b) {
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
 Sorter::Sorter(SortingAlgorithm* alg) :Algorithm(alg)
 {
 }
@@ -26,9 +32,7 @@ void BubbleSort::Sort(int* data, int size)
 			int tmp;
 			if (data[i + 1] < data[i])
 			{
-				tmp = data[i + 1];
-				data[i + 1] = data[i];
-				data[i] = tmp;
+				swap(&data[i], &data[i+1]);
 				SwapHappened = true;
 			}
 		}
@@ -47,9 +51,65 @@ void SelectionSort::Sort(int* data, int size)
 				indexOfMin = j;
 			}
 		}
-
-		int tmp=data[indexOfMin];
-		data[indexOfMin] = data[i];
-		data[i] = tmp;
+		swap(&data[indexOfMin], &data[i]);
 	}
+}
+
+void InsertionSort::Sort(int* data, int size)
+{
+	for (size_t i = 1; i < size; i++)
+	{
+		int current = data[i];
+		for (int j = i-1; j >= 0; j--)
+		{			
+			if (current <data[j])
+			{
+				data[j + 1] = data[j];
+			}
+			else
+			{
+				data[j+1] = current;
+				break;
+			}
+		}
+		
+	}
+}
+
+void QuickSort::Sort(int* data, int size)
+{
+	RecursiveSort(data, 0, size);
+}
+
+void QuickSort::RecursiveSort(int* data, int begin, int end)
+{
+	
+	if (end>begin)
+	{	
+		int center = (begin + end) / 2;
+		int i = begin-1;
+		int j = end+1;
+		while (true)
+		{
+			do
+			{
+				i++;
+			} while (data[i] < data[center]);
+
+			do
+			{
+				j--;
+			} while (data[j] > data[center]);
+
+			if (i>=j)
+			{
+				break;
+			}
+			swap(&data[i], &data[j]);
+		}
+
+		RecursiveSort(data, begin, center - 1);
+		RecursiveSort(data, center + 1, end);
+	}
+	
 }

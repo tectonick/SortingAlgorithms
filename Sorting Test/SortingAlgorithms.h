@@ -20,6 +20,20 @@ public:
 	void Sort(int* data, int size);
 };
 
+class InsertionSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+};
+
+class QuickSort :public SortingAlgorithm
+{
+public:
+	void Sort(int* data, int size);
+private:
+	void RecursiveSort(int* data,int begin, int end);
+};
+
 
 
 class Sorter
