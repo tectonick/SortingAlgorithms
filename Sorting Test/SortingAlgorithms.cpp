@@ -1,33 +1,44 @@
 #include "SortingAlgorithms.h"
 
-void StateKeeper::SaveCurrentState(int* data, int size)
+void StateKeeper::SaveCurrentState(short* data, short size)
 {
-	int* NewData = new int[size];
+	short* NewData = new short[size];
 	for (size_t i = 0; i < size; i++)
 	{
 		NewData[i] = data[i];
 	}
-	States.push_back(NewData);
+	States->push_back(NewData);
+	
 }
 
-int* StateKeeper::GetState(int i)
+short* StateKeeper::GetState(short i)
 {
-	return States.at(i);
+	return States->at(i);
 }
 
 void StateKeeper::ClearStates()
 {
-	States.clear();
+	States->clear();
 }
 
-int StateKeeper::StatesCount()
+short StateKeeper::StatesCount()
 {
-	return States.size();
+	return States->size();
+}
+
+StateKeeper::StateKeeper()
+{
+	States = new vector<short*>;
+}
+
+StateKeeper::~StateKeeper()
+{
+	delete States;
 }
 
 
-void swap(int* a, int* b) {
-	int tmp = *a;
+void swap(short* a, short* b) {
+	short tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
@@ -37,18 +48,18 @@ class BinaryTree
 public:
 	BinaryTree();
 	~BinaryTree();
-	void AddNode(int key);
-	void Linearize(int * result);
+	void AddNode(short key);
+	void Linearize(short* result);
 private:
-	int Size;
+	short Size;
 	
 	struct Node
 	{
 		Node * left, * right; 
-		int key;
+		short key;
 	};
-	void RecursiveLinearize(Node* node, int * pos, int * result);
-	void RecursiveAdd(int key, Node* node);
+	void RecursiveLinearize(Node* node, short * pos, short * result);
+	void RecursiveAdd(short key, Node* node);
 	void RecursiveDelete(Node* node);
 
 	Node* Root;
@@ -65,7 +76,7 @@ BinaryTree::~BinaryTree()
 	RecursiveDelete(Root);
 }
 
-void BinaryTree::AddNode(int key)
+void BinaryTree::AddNode(short key)
 {
 	if (!Root)
 	{
@@ -81,13 +92,13 @@ void BinaryTree::AddNode(int key)
 	}
 }
 
-void BinaryTree::Linearize(int* result)
+void BinaryTree::Linearize(short* result)
 {
-	int position = 0;
+	short position = 0;
 	RecursiveLinearize(Root, &position, result);
 }
 
-void BinaryTree::RecursiveLinearize(Node* node, int* pos, int* result)
+void BinaryTree::RecursiveLinearize(Node* node, short* pos, short* result)
 {
 	if (node)
 	{
@@ -112,7 +123,7 @@ void BinaryTree::RecursiveDelete(Node* node)
 
 
 
-void BinaryTree::RecursiveAdd(int key, Node* node)
+void BinaryTree::RecursiveAdd(short key, Node* node)
 {
 	Node* tmp;
 	bool left;
@@ -162,7 +173,7 @@ Sorter::~Sorter()
 {
 }
 
-void Sorter::SortData(int* data, int size)
+void Sorter::SortData(short* data, short size)
 {
 	Algorithm->States.ClearStates();
 	Algorithm->Sort(data, size);
@@ -170,17 +181,21 @@ void Sorter::SortData(int* data, int size)
 
 void Sorter::ChangeAlgorithm(SortingAlgorithm* alg)
 {
+	if (Algorithm)
+	{
+		delete Algorithm;
+	}
 	Algorithm = alg;
 }
 
 
-void BubbleSort::Sort(int* data, int size)
+void BubbleSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	bool SwapHappened;
 	do {
 		SwapHappened = false;
-		for (int i = 0; i < size - 1; i++)
+		for (short i = 0; i < size - 1; i++)
 		{
 			if (data[i + 1] < data[i])
 			{
@@ -192,12 +207,12 @@ void BubbleSort::Sort(int* data, int size)
 	} while (SwapHappened);
 }
 
-void SelectionSort::Sort(int* data, int size)
+void SelectionSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	for (size_t i = 0; i < size; i++)
 	{
-		int indexOfMin = i;
+		short indexOfMin = i;
 		for (size_t j = i; j < size; j++)
 		{
 			if (data[j]<data[indexOfMin])
@@ -210,13 +225,13 @@ void SelectionSort::Sort(int* data, int size)
 	}
 }
 
-void InsertionSort::Sort(int* data, int size)
+void InsertionSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	for (size_t i = 1; i < size; i++)
 	{
-		int current = data[i];
-		int j = i - 1;
+		short current = data[i];
+		short j = i - 1;
 		while ((j>=0)&&(current<data[j]))
 		{
 			data[j + 1] = data[j];
@@ -227,23 +242,24 @@ void InsertionSort::Sort(int* data, int size)
 	}
 }
 
-void ShellSort::Sort(int* data, int size)
+void ShellSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
-	int step = size/2;
+	short step = size/2;
 	while (step > 0)
 	{
 		for (size_t i = 1; i < size; i++)
 		{
-			int current = data[i];
-			int j = i - 1;
+			short current = data[i];
+			short j = i - 1;
 			while ((j >= 0) && (current < data[j]))
 			{
 				data[j + 1] = data[j];
+				States.SaveCurrentState(data, size);
 				j--;
 			}
 			data[j + 1] = current;
-			States.SaveCurrentState(data, size);
+			
 
 		}
 		step = step / 2;
@@ -252,17 +268,17 @@ void ShellSort::Sort(int* data, int size)
 
 
 
-void QuickSort::Sort(int* data, int size)
+void QuickSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	RecursiveSort(data, size, 0, size-1);
 }
 
-void QuickSort::RecursiveSort(int* data, int size, int begin, int end)
+void QuickSort::RecursiveSort(short* data, short size, short begin, short end)
 {
 
-	int i = begin, j = end;
-	int center = data[(begin + end) / 2];
+	short i = begin, j = end;
+	short center = data[(begin + end) / 2];
 
 	do {
 		while (data[i] < center)
@@ -288,15 +304,15 @@ void QuickSort::RecursiveSort(int* data, int size, int begin, int end)
 		RecursiveSort(data, size, begin, j);
 }
 
-void CoctailSort::Sort(int* data, int size)
+void CoctailSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	bool SwapHappened;
-	int begin = 0;
-	int end = size;
+	short begin = 0;
+	short end = size;
 	do {
 		SwapHappened = false;
-		for (int i = begin; i < end - 1; i++)
+		for (short i = begin; i < end - 1; i++)
 		{
 			if (data[i + 1] < data[i])
 			{
@@ -311,7 +327,7 @@ void CoctailSort::Sort(int* data, int size)
 			break;
 		}
 		SwapHappened = false;
-		for (int i = end-1; i >= 0; i--)
+		for (short i = end-1; i >= 0; i--)
 		{
 			if (data[i + 1] < data[i])
 			{
@@ -324,15 +340,15 @@ void CoctailSort::Sort(int* data, int size)
 	} while (SwapHappened);
 }
 
-void CombSort::Sort(int* data, int size)
+void CombSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	double decreaseFactor = 1.247;
-	int step = size / decreaseFactor;
+	short step = size / decreaseFactor;
 
 	while (step>1)
 	{
-		for (int i = 0; i < size - step; i++)
+		for (short i = 0; i < size - step; i++)
 		{
 			if (data[i +step] < data[i])
 			{
@@ -346,7 +362,7 @@ void CombSort::Sort(int* data, int size)
 	bool SwapHappened;
 	do {
 		SwapHappened = false;
-		for (int i = 0; i < size - 1; i++)
+		for (short i = 0; i < size - 1; i++)
 		{
 			if (data[i + 1] < data[i])
 			{
@@ -359,11 +375,11 @@ void CombSort::Sort(int* data, int size)
 
 }
 
-void TreeSort::Sort(int* data, int size)
+void TreeSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	BinaryTree tree;
-	for (int i = 0; i < size; i++)
+	for (short i = 0; i < size; i++)
 	{
 		tree.AddNode(data[i]);
 	}
@@ -372,16 +388,16 @@ void TreeSort::Sort(int* data, int size)
 
 }
 
-void HeapSort::Sort(int* data, int size)
+void HeapSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
-	for (int i = size/2; i >= 0; i--)
+	for (short i = size/2; i >= 0; i--)
 	{
 		SiftDown(data,size, i, size-1);
 		
 	}
 
-	int end = size-1;
+	short end = size-1;
 	while (end > 0) {
 		swap(&data[0], &data[end]);
 		States.SaveCurrentState(data, size);
@@ -391,14 +407,14 @@ void HeapSort::Sort(int* data, int size)
 
 }
 
-void HeapSort::SiftDown(int* data, int size, int begin, int end)
+void HeapSort::SiftDown(short* data, short size, short begin, short end)
 {
-	int current = begin;
+	short current = begin;
 	while (current<=end/2)
 	{
 		if (current * 2 + 2 <= end)
 		{
-			int maxi = current * 2 + 1;
+			short maxi = current * 2 + 1;
 			if (data[current * 2 + 1] < data[2 * current + 2])
 			{
 				maxi = 2 * current + 2;
@@ -430,29 +446,29 @@ void HeapSort::SiftDown(int* data, int size, int begin, int end)
 
 }
 
-void MergeSort::Sort(int* data, int size)
+void MergeSort::Sort(short* data, short size)
 {
 	States.SaveCurrentState(data, size);
 	RecursiveSort(data, size, 0, size - 1);
 }
 
-void MergeSort::RecursiveSort(int* data, int size, int begin, int end)
+void MergeSort::RecursiveSort(short* data, short size, short begin, short end)
 {
 
 	if (begin+1>end)
 	{
 		return;
 	}
-	int center = (begin + end) / 2;
+	short center = (begin + end) / 2;
 	RecursiveSort(data, size,begin, center);
 	RecursiveSort(data, size, center+1, end);
-	int* result = new int[end - begin+1];
+	short* result = new short[end - begin+1];
 
 
-	int current1 = begin;
-	int current2 = center + 1;
+	short current1 = begin;
+	short current2 = center + 1;
 
-	for (int i = 0; i < (end-begin+1); i++)
+	for (short i = 0; i < (end-begin+1); i++)
 	{
 		if (current1<=center && current2 <= end)
 		{

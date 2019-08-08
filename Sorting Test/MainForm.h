@@ -5,9 +5,6 @@
 
 namespace SortingTest {
 
-	const int TESTSIZE = 21;
-	const int testarraytemplate[TESTSIZE] = { 4,1,6,2,2,35,11,1,3,8,22,12,45,67,21,4,56,100,2,8 ,82};
-	int testarray[TESTSIZE] = { 4,1,6,2,2,35,11,1,3,8,22,12,45,67,21,4,56,100,2,8 ,82};
 
 
 	using namespace System;
@@ -27,7 +24,15 @@ namespace SortingTest {
 	{
 	public:
 		Sorter* s;
+
+		short ArraySize;
+		short*TestArray;
+		short*ResultArray;
+
 	private: System::Windows::Forms::ComboBox^ comboBox1;
+	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::Label^ label1;
 	public:
 		Drawer^ d;
 		MainForm(void)
@@ -39,7 +44,6 @@ namespace SortingTest {
 
 			s = new Sorter(new BubbleSort());
 			d = gcnew Drawer(chart1);
-			d->DrawArray(testarray, TESTSIZE);
 		}
 
 	protected:
@@ -57,7 +61,7 @@ namespace SortingTest {
 	protected:
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
-	private: System::Windows::Forms::Button^ button2;
+
 	private: System::Windows::Forms::TrackBar^ trackBar1;
 
 	private:
@@ -73,15 +77,17 @@ namespace SortingTest {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea3 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->SuspendLayout();
@@ -92,7 +98,6 @@ namespace SortingTest {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(389, 20);
 			this->textBox1->TabIndex = 0;
-			this->textBox1->Text = L"Array ";
 			// 
 			// button1
 			// 
@@ -106,36 +111,26 @@ namespace SortingTest {
 			// 
 			// chart1
 			// 
-			chartArea3->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea3);
-			legend3->Name = L"Legend1";
-			this->chart1->Legends->Add(legend3);
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->chart1->Legends->Add(legend1);
 			this->chart1->Location = System::Drawing::Point(468, 1);
 			this->chart1->Name = L"chart1";
-			series3->ChartArea = L"ChartArea1";
-			series3->Legend = L"Legend1";
-			series3->Name = L"Series1";
-			this->chart1->Series->Add(series3);
+			series1->ChartArea = L"ChartArea1";
+			series1->Legend = L"Legend1";
+			series1->Name = L"Series1";
+			this->chart1->Series->Add(series1);
 			this->chart1->Size = System::Drawing::Size(719, 417);
 			this->chart1->TabIndex = 2;
 			this->chart1->Text = L"chart1";
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(303, 274);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"Show";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MainForm::Button2_Click);
 			// 
 			// trackBar1
 			// 
 			this->trackBar1->Location = System::Drawing::Point(468, 425);
 			this->trackBar1->Maximum = 20;
 			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(719, 45);
+			this->trackBar1->Size = System::Drawing::Size(674, 45);
 			this->trackBar1->TabIndex = 5;
 			this->trackBar1->Scroll += gcnew System::EventHandler(this, &MainForm::TrackBar1_Scroll);
 			// 
@@ -154,14 +149,43 @@ namespace SortingTest {
 			this->comboBox1->Text = L"Choose sorting algorithm";
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::ComboBox1_SelectedIndexChanged);
 			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(134, 303);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(137, 23);
+			this->button3->TabIndex = 7;
+			this->button3->Text = L"Generate random array";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::Button3_Click);
+			// 
+			// textBox2
+			// 
+			this->textBox2->Location = System::Drawing::Point(277, 303);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(100, 20);
+			this->textBox2->TabIndex = 8;
+			this->textBox2->Text = L"20";
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(1149, 436);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(35, 13);
+			this->label1->TabIndex = 9;
+			this->label1->Text = L"Count";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1232, 512);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->textBox2);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->trackBar1);
-			this->Controls->Add(this->button2);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox1);
@@ -179,18 +203,22 @@ namespace SortingTest {
 	
 
 	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		for (size_t i = 0; i < TESTSIZE; i++)
+		for (size_t i = 0; i < ArraySize; i++)
 		{
-			testarray[i] = testarraytemplate[i];
+			ResultArray[i] = TestArray[i];
 		}
-		s->SortData(testarray, TESTSIZE);
-		for (int i = 0; i < TESTSIZE; i++)
+		s->SortData(ResultArray, ArraySize);
+		d->DrawArray(ResultArray, ArraySize);
+		textBox1->Clear();
+		for (int i = 0; i < ArraySize; i++)
 		{
-			textBox1->Text += testarray[i];
+			textBox1->Text += ResultArray[i];
 			textBox1->Text += " ";
 		}
-		trackBar1->Value = 0;
+		
 		trackBar1->Maximum = s->Algorithm->States.StatesCount()-1;
+		trackBar1->Value = trackBar1->Maximum;
+		label1->Text = trackBar1->Value.ToString();
 		
 		
 	}
@@ -200,10 +228,11 @@ namespace SortingTest {
 
 	private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		
-		d->DrawArray(testarray, TESTSIZE);
+		d->DrawArray(ResultArray, ArraySize);
 	}
 	private: System::Void TrackBar1_Scroll(System::Object^ sender, System::EventArgs^ e) {
-		d->DrawArray(s->Algorithm->States.GetState(trackBar1->Value), TESTSIZE);
+		d->DrawArray(s->Algorithm->States.GetState(trackBar1->Value), ArraySize);
+		label1->Text = trackBar1->Value.ToString();
 		
 	}
 private: System::Void ComboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -223,6 +252,26 @@ private: System::Void ComboBox1_SelectedIndexChanged(System::Object^ sender, Sys
 		s->ChangeAlgorithm(new BubbleSort()); break;
 	}
 	
+}
+private: System::Void Button3_Click(System::Object^ sender, System::EventArgs^ e) {
+	ArraySize=System::Int32::Parse(textBox2->Text);
+	if (TestArray)
+		delete[] TestArray;
+	if (ResultArray)
+		delete[] ResultArray;
+	TestArray = new short[ArraySize];
+	ResultArray = new short[ArraySize];
+	for (size_t i = 0; i < ArraySize; i++)
+	{
+		TestArray[i] = rand() % 100 + 1;
+	}
+	d->DrawArray(TestArray, ArraySize);
+	textBox1->Clear();
+	for (int i = 0; i < ArraySize; i++)
+	{
+		textBox1->Text += TestArray[i];
+		textBox1->Text += " ";
+	}
 }
 };
 

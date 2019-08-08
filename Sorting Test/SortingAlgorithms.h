@@ -7,17 +7,19 @@ using std::vector;
 class StateKeeper
 {
 public:
-	vector<int*> States;
-	void SaveCurrentState(int* data, int size);
-	int* GetState(int i);
+	vector<short*> * States;
+	void SaveCurrentState(short* data, short size);
+	short* GetState(short i);
 	void ClearStates();
-	int StatesCount();
+	short StatesCount();
+	StateKeeper();
+	~StateKeeper();
 };
 
 class SortingAlgorithm
 {
 public:
-	void virtual Sort(int* data, int size) = 0;
+	void virtual Sort(short* data, short size) = 0;
 	StateKeeper States;
 };
 
@@ -25,68 +27,68 @@ public:
 class BubbleSort :public SortingAlgorithm
 {
 public:
-	void Sort(int * data, int size);
+	void Sort(short * data, short size);
 };
 
 class CoctailSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 
 class CombSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 class SelectionSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 class InsertionSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 class ShellSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 class QuickSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 private:
-	void RecursiveSort(int* data, int size, int begin, int end);
+	void RecursiveSort(short* data, short size, short begin, short end);
 };
 
 class TreeSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 };
 
 class HeapSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 private:
-	void SiftDown(int* data, int size, int begin, int end);
+	void SiftDown(short* data, short size, short begin, short end);
 };
 
 class MergeSort :public SortingAlgorithm
 {
 public:
-	void Sort(int* data, int size);
+	void Sort(short* data, short size);
 private:
-	void RecursiveSort(int* data, int size, int begin, int end);
+	void RecursiveSort(short* data, short size, short begin, short end);
 };
 
 class Sorter
@@ -94,7 +96,7 @@ class Sorter
 public:
 	Sorter(SortingAlgorithm* alg);
 	~Sorter();
-	void SortData(int * data, int size);
+	void SortData(short * data, short size);
 	SortingAlgorithm * Algorithm;
 	void ChangeAlgorithm(SortingAlgorithm* alg);
 };
