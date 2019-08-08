@@ -1,5 +1,4 @@
 #include "MainForm.h"
-#include "SortingAlgorithms.h"
 using namespace SortingTest;
 
 using namespace System;
