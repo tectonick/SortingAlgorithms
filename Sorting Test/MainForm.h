@@ -116,9 +116,9 @@ namespace SortingTest {
 			this->ArrayLengthLabel = (gcnew System::Windows::Forms::Label());
 			this->SortingAlgorithmLabel = (gcnew System::Windows::Forms::Label());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->StatesCountLabel = (gcnew System::Windows::Forms::Label());
 			this->InputArrayLabel = (gcnew System::Windows::Forms::Label());
 			this->OutpuLabel = (gcnew System::Windows::Forms::Label());
+			this->StatesCountLabel = (gcnew System::Windows::Forms::Label());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->flowLayoutPanel3 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->VisualizationLabel = (gcnew System::Windows::Forms::Label());
@@ -217,10 +217,12 @@ namespace SortingTest {
 			// 
 			// OutputTextBox
 			// 
+			this->OutputTextBox->BackColor = System::Drawing::SystemColors::Window;
 			this->OutputTextBox->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->OutputTextBox->Location = System::Drawing::Point(3, 210);
 			this->OutputTextBox->Multiline = true;
 			this->OutputTextBox->Name = L"OutputTextBox";
+			this->OutputTextBox->ReadOnly = true;
 			this->OutputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->OutputTextBox->Size = System::Drawing::Size(389, 184);
 			this->OutputTextBox->TabIndex = 10;
@@ -264,15 +266,6 @@ namespace SortingTest {
 			this->flowLayoutPanel1->Size = System::Drawing::Size(392, 477);
 			this->flowLayoutPanel1->TabIndex = 14;
 			// 
-			// StatesCountLabel
-			// 
-			this->StatesCountLabel->AutoSize = true;
-			this->StatesCountLabel->Location = System::Drawing::Point(3, 0);
-			this->StatesCountLabel->Name = L"StatesCountLabel";
-			this->StatesCountLabel->Size = System::Drawing::Size(67, 13);
-			this->StatesCountLabel->TabIndex = 15;
-			this->StatesCountLabel->Text = L"States count";
-			// 
 			// InputArrayLabel
 			// 
 			this->InputArrayLabel->AutoSize = true;
@@ -290,6 +283,15 @@ namespace SortingTest {
 			this->OutpuLabel->Size = System::Drawing::Size(65, 13);
 			this->OutpuLabel->TabIndex = 17;
 			this->OutpuLabel->Text = L"Output array";
+			// 
+			// StatesCountLabel
+			// 
+			this->StatesCountLabel->AutoSize = true;
+			this->StatesCountLabel->Location = System::Drawing::Point(3, 0);
+			this->StatesCountLabel->Name = L"StatesCountLabel";
+			this->StatesCountLabel->Size = System::Drawing::Size(67, 13);
+			this->StatesCountLabel->TabIndex = 15;
+			this->StatesCountLabel->Text = L"States count";
 			// 
 			// flowLayoutPanel2
 			// 
@@ -363,6 +365,11 @@ namespace SortingTest {
 				ints->Add(ParseResult);
 			}		
 			
+		}
+		if (ints->Count == 0)
+		{
+			OutputTextBox->Text = "Haven`t found any numbers";
+			return;
 		}
 		ArraySize = ints->Count;
 		if (ResultArray)
