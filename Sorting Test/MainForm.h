@@ -26,7 +26,7 @@ namespace SortingTest {
 		Sorter* s;
 
 		short ArraySize;
-		short*ResultArray;
+		char*ResultArray;
 	private: System::Windows::Forms::ComboBox^ AlgorithmComboBox;
 	public:
 
@@ -360,9 +360,9 @@ namespace SortingTest {
 		for each (String ^ s in nums)
 		{
 			short ParseResult;
-			if (System::Int16::TryParse(s, ParseResult))
+			if (System::Int16::TryParse(s,ParseResult))
 			{
-				ints->Add(ParseResult);
+				ints->Add((char)ParseResult);
 			}		
 			
 		}
@@ -374,10 +374,10 @@ namespace SortingTest {
 		ArraySize = ints->Count;
 		if (ResultArray)
 			delete[] ResultArray;
-		ResultArray = new short[ArraySize];
+		ResultArray = new char[ArraySize];
 		for (int i = 0; i < ArraySize; i++)
 		{
-			ResultArray[i] = (short) ints[i];
+			ResultArray[i] = (char) ints[i];
 		}
 		s->SortData(ResultArray, ArraySize);
 		d->DrawArray(ResultArray, ArraySize);

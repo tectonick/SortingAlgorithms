@@ -7,7 +7,7 @@ public ref class Drawer
 public:
 	Drawer(Chart^ chart):Chart(chart) {}
 	~Drawer();
-	void DrawArray(short* data, short size);
+	void DrawArray(char* data, short size);
 
 private:
 	Chart^ Chart;
