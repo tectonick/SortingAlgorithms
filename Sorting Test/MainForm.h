@@ -33,6 +33,8 @@ namespace SortingTest {
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::Label^ label2;
 	public:
 		Drawer^ d;
 		MainForm(void)
@@ -88,6 +90,8 @@ namespace SortingTest {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->SuspendLayout();
@@ -95,13 +99,15 @@ namespace SortingTest {
 			// textBox1
 			// 
 			this->textBox1->Location = System::Drawing::Point(25, 35);
+			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(389, 20);
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox1->Size = System::Drawing::Size(389, 133);
 			this->textBox1->TabIndex = 0;
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(262, 189);
+			this->button1->Location = System::Drawing::Point(468, 476);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 1;
@@ -142,7 +148,7 @@ namespace SortingTest {
 				L"Bubble", L"Coctail", L"Comb", L"Heap", L"Insertion",
 					L"Merge", L"Quick", L"Selection", L"Shell", L"Tree"
 			});
-			this->comboBox1->Location = System::Drawing::Point(78, 191);
+			this->comboBox1->Location = System::Drawing::Point(574, 476);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(178, 21);
 			this->comboBox1->TabIndex = 6;
@@ -151,9 +157,9 @@ namespace SortingTest {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(134, 303);
+			this->button3->Location = System::Drawing::Point(280, 184);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(137, 23);
+			this->button3->Size = System::Drawing::Size(134, 23);
 			this->button3->TabIndex = 7;
 			this->button3->Text = L"Generate random array";
 			this->button3->UseVisualStyleBackColor = true;
@@ -161,9 +167,9 @@ namespace SortingTest {
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(277, 303);
+			this->textBox2->Location = System::Drawing::Point(346, 213);
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
+			this->textBox2->Size = System::Drawing::Size(68, 20);
 			this->textBox2->TabIndex = 8;
 			this->textBox2->Text = L"20";
 			// 
@@ -176,11 +182,31 @@ namespace SortingTest {
 			this->label1->TabIndex = 9;
 			this->label1->Text = L"Count";
 			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(25, 362);
+			this->textBox3->Multiline = true;
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->textBox3->Size = System::Drawing::Size(397, 114);
+			this->textBox3->TabIndex = 10;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(277, 216);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(63, 13);
+			this->label2->TabIndex = 11;
+			this->label2->Text = L"Array length";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1232, 512);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->button3);
@@ -203,17 +229,33 @@ namespace SortingTest {
 	
 
 	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		for (size_t i = 0; i < ArraySize; i++)
+
+		array<String^> ^ nums=textBox1->Text->Split(gcnew array<wchar_t> {' ', ','});
+		System::Collections::ArrayList ^ ints = gcnew System::Collections::ArrayList();
+		for each (String ^ s in nums)
 		{
-			ResultArray[i] = TestArray[i];
+			short ParseResult;
+			if (System::Int16::TryParse(s, ParseResult))
+			{
+				ints->Add(ParseResult);
+			}		
+			
+		}
+		ArraySize = ints->Count;
+		if (ResultArray)
+			delete[] ResultArray;
+		ResultArray = new short[ArraySize];
+		for (int i = 0; i < ArraySize; i++)
+		{
+			ResultArray[i] = (short) ints[i];
 		}
 		s->SortData(ResultArray, ArraySize);
 		d->DrawArray(ResultArray, ArraySize);
-		textBox1->Clear();
+		textBox3->Clear();
 		for (int i = 0; i < ArraySize; i++)
 		{
-			textBox1->Text += ResultArray[i];
-			textBox1->Text += " ";
+			textBox3->Text += ResultArray[i];
+			textBox3->Text += " ";
 		}
 		
 		trackBar1->Maximum = s->Algorithm->States.StatesCount()-1;
@@ -255,21 +297,10 @@ private: System::Void ComboBox1_SelectedIndexChanged(System::Object^ sender, Sys
 }
 private: System::Void Button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	ArraySize=System::Int32::Parse(textBox2->Text);
-	if (TestArray)
-		delete[] TestArray;
-	if (ResultArray)
-		delete[] ResultArray;
-	TestArray = new short[ArraySize];
-	ResultArray = new short[ArraySize];
-	for (size_t i = 0; i < ArraySize; i++)
-	{
-		TestArray[i] = rand() % 100 + 1;
-	}
-	d->DrawArray(TestArray, ArraySize);
 	textBox1->Clear();
 	for (int i = 0; i < ArraySize; i++)
 	{
-		textBox1->Text += TestArray[i];
+		textBox1->Text += rand() % 100 + 1;
 		textBox1->Text += " ";
 	}
 }
