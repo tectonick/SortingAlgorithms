@@ -102,8 +102,8 @@ namespace SortingTest {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->InputTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->SortButton = (gcnew System::Windows::Forms::Button());
 			this->StatesGraph = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
@@ -134,7 +134,7 @@ namespace SortingTest {
 			this->InputTextBox->Location = System::Drawing::Point(3, 16);
 			this->InputTextBox->Multiline = true;
 			this->InputTextBox->Name = L"InputTextBox";
-			this->InputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->InputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->InputTextBox->Size = System::Drawing::Size(389, 175);
 			this->InputTextBox->TabIndex = 0;
 			// 
@@ -152,13 +152,13 @@ namespace SortingTest {
 			// 
 			this->StatesGraph->BorderlineColor = System::Drawing::Color::Gray;
 			this->StatesGraph->BorderlineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
-			chartArea2->Name = L"ChartArea1";
-			this->StatesGraph->ChartAreas->Add(chartArea2);
+			chartArea1->Name = L"ChartArea1";
+			this->StatesGraph->ChartAreas->Add(chartArea1);
 			this->StatesGraph->Location = System::Drawing::Point(3, 16);
 			this->StatesGraph->Name = L"StatesGraph";
-			series2->ChartArea = L"ChartArea1";
-			series2->Name = L"Series1";
-			this->StatesGraph->Series->Add(series2);
+			series1->ChartArea = L"ChartArea1";
+			series1->Name = L"Series1";
+			this->StatesGraph->Series->Add(series1);
 			this->StatesGraph->Size = System::Drawing::Size(708, 378);
 			this->StatesGraph->TabIndex = 2;
 			this->StatesGraph->Text = L"chart1";
@@ -223,7 +223,7 @@ namespace SortingTest {
 			this->OutputTextBox->Multiline = true;
 			this->OutputTextBox->Name = L"OutputTextBox";
 			this->OutputTextBox->ReadOnly = true;
-			this->OutputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->OutputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->OutputTextBox->Size = System::Drawing::Size(389, 184);
 			this->OutputTextBox->TabIndex = 10;
 			// 
@@ -386,6 +386,7 @@ namespace SortingTest {
 			OutputTextBox->Text += ResultArray[i];
 			OutputTextBox->Text += " ";
 		}
+		OutputTextBox->Text += " ("+s->Algorithm->States.GetTime().ToString()+" ms)";
 		
 		StatesTrackBar->Maximum = s->Algorithm->States.StatesCount()-1;
 		StatesTrackBar->Value = StatesTrackBar->Maximum;

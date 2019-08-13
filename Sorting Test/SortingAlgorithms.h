@@ -1,26 +1,38 @@
 #pragma once
 #include <vector>
+#include <ctime>
 
 using std::vector;
+using std::clock_t;
 
 
-class StateKeeper
+class Tracker
 {
+private:
+	clock_t startTime;
+	clock_t elapsedTime;
+	vector<short*>* States;
 public:
-	vector<short*> * States;
+	void StartTimer();
+	void PauseTimer();
+	void ClearTimer();
+	clock_t GetTime();
+
 	void SaveCurrentState(short* data, short size);
 	short* GetState(int i);
 	void ClearStates();
 	int StatesCount();
-	StateKeeper();
-	~StateKeeper();
+
+	Tracker();
+	~Tracker();
 };
 
 class SortingAlgorithm
 {
 public:
 	void virtual Sort(short* data, short size) = 0;
-	StateKeeper States;
+	Tracker States;
+
 };
 
 

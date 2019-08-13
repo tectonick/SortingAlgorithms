@@ -1,39 +1,70 @@
 #include "SortingAlgorithms.h"
 
-void StateKeeper::SaveCurrentState(short* data, short size)
+
+void Tracker::StartTimer()
 {
+	startTime = clock();
+}
+
+void Tracker::PauseTimer()
+{
+	clock_t CurrentClock = clock();
+	elapsedTime += CurrentClock - startTime;
+}
+
+void Tracker::ClearTimer()
+{
+	startTime = 0;
+	elapsedTime = 0;
+}
+
+clock_t Tracker::GetTime()
+{
+	return elapsedTime;
+}
+
+void Tracker::SaveCurrentState(short* data, short size)
+{
+	PauseTimer();
+	
 	short* NewData = new short[size];
 	for (size_t i = 0; i < size; i++)
 	{
 		NewData[i] = data[i];
 	}
 	States->push_back(NewData);
-	
+	StartTimer();	
 }
 
-short* StateKeeper::GetState(int i)
+short* Tracker::GetState(int i)
 {
 	return States->at(i);
 }
 
-void StateKeeper::ClearStates()
+void Tracker::ClearStates()
 {
+	for (size_t i = 0; i < StatesCount(); i++)
+	{
+		delete[] States->at(i);
+	}
 	States->clear();
 }
 
-int StateKeeper::StatesCount()
+int Tracker::StatesCount()
 {
 	return States->size();
 }
 
-StateKeeper::StateKeeper()
+Tracker::Tracker()
 {
 	States = new vector<short*>;
+	startTime = 0;
+	elapsedTime = 0;
 }
 
-StateKeeper::~StateKeeper()
+Tracker::~Tracker()
 {
-	delete States;
+	ClearStates(); 
 }
 
 
@@ -176,7 +207,10 @@ Sorter::~Sorter()
 void Sorter::SortData(short* data, short size)
 {
 	Algorithm->States.ClearStates();
+	Algorithm->States.ClearTimer();
+	Algorithm->States.StartTimer();
 	Algorithm->Sort(data, size);
+	Algorithm->States.PauseTimer();
 }
 
 void Sorter::ChangeAlgorithm(SortingAlgorithm* alg)
