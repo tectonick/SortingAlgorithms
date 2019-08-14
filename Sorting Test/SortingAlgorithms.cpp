@@ -170,10 +170,10 @@ void BubbleSort::Sort(char* data, int size)
 void SelectionSort::Sort(char* data, int size)
 {
 	AlgorithmTracker.SaveCurrentState(data, size);
-	for (size_t i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		int indexOfMin = i;
-		for (size_t j = i; j < size; j++)
+		for (int j = i; j < size; j++)
 		{
 			if (data[j]<data[indexOfMin])
 			{
@@ -188,7 +188,7 @@ void SelectionSort::Sort(char* data, int size)
 void InsertionSort::Sort(char* data, int size)
 {
 	AlgorithmTracker.SaveCurrentState(data, size);
-	for (size_t i = 1; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
 		char current = data[i];
 		int j = i - 1;
@@ -208,7 +208,7 @@ void ShellSort::Sort(char* data, int size)
 	int step = size/2;
 	while (step > 0)
 	{
-		for (size_t i = 1; i < size; i++)
+		for (int i = 1; i < size; i++)
 		{
 			char current = data[i];
 			int j = i - 1;
@@ -301,7 +301,7 @@ void CombSort::Sort(char* data, int size)
 {
 	AlgorithmTracker.SaveCurrentState(data, size);
 	double decreaseFactor = 1.247;
-	int step = size / decreaseFactor;
+	int step = (int) (size / decreaseFactor);
 
 	while (step>1)
 	{
@@ -313,7 +313,7 @@ void CombSort::Sort(char* data, int size)
 				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 		}
-		step = step / decreaseFactor;
+		step = (int) (step / decreaseFactor);
 	}
 	
 	bool SwapHappened;
@@ -443,7 +443,7 @@ void MergeSort::RecursiveSort(char* data, int size, int begin, int end)
 			}
 		}
 	}
-	for (size_t i = 0; i < (end - begin+1); i++)
+	for (int i = 0; i < (end - begin+1); i++)
 	{
 		data[begin+i] = result[i];
 		AlgorithmTracker.SaveCurrentState(data, size);
