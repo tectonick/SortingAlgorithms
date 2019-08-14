@@ -1,6 +1,8 @@
 #pragma once
 #include "SortingAlgorithms.h"
 #include "Drawer.h"
+#include <String>
+#include <sstream>
 
 
 namespace SortingTest {
@@ -381,11 +383,25 @@ namespace SortingTest {
 		}
 		s->SortData(ResultArray, ArraySize);
 		d->DrawArray(ResultArray, ArraySize);
+
+		std::string str = "";
+		std::stringstream ss;
+
+		for (size_t i = 0; i < ArraySize; i++)
+		{
+			ss << (short)ResultArray[i] << " ";
+		}
+		str = ss.str();
+
+		OutputTextBox->Text = gcnew String(str.c_str());
+
+		/*
 		for (int i = 0; i < ArraySize; i++)
 		{
 			OutputTextBox->Text += ResultArray[i];
 			OutputTextBox->Text += " ";
 		}
+		*/
 		OutputTextBox->Text += " ("+s->Algorithm->States.GetTime().ToString()+" ms)";
 		
 		StatesTrackBar->Maximum = s->Algorithm->States.StatesCount()-1;
@@ -428,11 +444,30 @@ private: System::Void AlgorithmComboBox_SelectedIndexChanged(System::Object^ sen
 private: System::Void GenerateArrayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	ArraySize=System::Int32::Parse(ArrayLengthBox->Text);
 	InputTextBox->Clear();
+	System::Collections::Generic::List<char>^ rands = gcnew System::Collections::Generic::List<char>(ArraySize);
+	for (int i = 0; i < ArraySize; i++)
+	{
+		rands->Add(rand() % 100 + 1);
+	}
+	std::string str="";
+	std::stringstream ss;
+
+	
+	for (size_t i = 0; i < ArraySize; i++)
+	{
+		ss << (short)rands[i]<<" ";
+	}
+	str = ss.str();
+
+	InputTextBox->Text = gcnew String(str.c_str());
+
+	/*
 	for (int i = 0; i < ArraySize; i++)
 	{
 		InputTextBox->Text += rand() % 100 + 1;
 		InputTextBox->Text += " ";
 	}
+	*/
 }
 private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
 }
