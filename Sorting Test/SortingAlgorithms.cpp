@@ -1,11 +1,13 @@
 #include "SortingAlgorithms.h"
 
+//Internal function for swapping 2 elements of and array
 void swap(char* a, char* b) {
 	char tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
 
+// Internal type for TreeSort algorithm
 class BinaryTree
 {
 public:
@@ -14,24 +16,20 @@ public:
 	void AddNode(char key);
 	void Linearize(char* result);
 private:
-	int Size;
-	
 	struct Node
 	{
 		Node * left, * right; 
 		char key;
 	};
-	void RecursiveLinearize(Node* node, int* pos, char* result);
-	void RecursiveAdd(char key, Node* node);
-	void RecursiveDelete(Node* node);
-
 	Node* Root;
+	void RecursiveLinearize(Node* node, int* pos, char* result); // LNR traversal with output to char[] array
+	void RecursiveAdd(char key, Node* node); // Internal function to add Node
+	void RecursiveDelete(Node* node); // Internal function to delete tree during LRN traversal
 };
 
 BinaryTree::BinaryTree()
 {
 	Root = 0;
-	Size = 0;
 }
 
 BinaryTree::~BinaryTree()
@@ -47,7 +45,6 @@ void BinaryTree::AddNode(char key)
 		Root->key = key;
 		Root->left = 0;
 		Root->right = 0;
-		Size++;
 	}
 	else
 	{
@@ -57,7 +54,7 @@ void BinaryTree::AddNode(char key)
 
 void BinaryTree::Linearize(char* result)
 {
-	int position = 0;
+	int position = 0; // Position in result array to insert key
 	RecursiveLinearize(Root, &position, result);
 }
 
@@ -68,8 +65,7 @@ void BinaryTree::RecursiveLinearize(Node* node, int* pos, char* result)
 		RecursiveLinearize(node->left, pos, result);
 		result[*pos] = node->key;
 		(*pos)++;
-		RecursiveLinearize(node->right, pos, result);
-		
+		RecursiveLinearize(node->right, pos, result);		
 	}
 }
 
@@ -89,7 +85,7 @@ void BinaryTree::RecursiveDelete(Node* node)
 void BinaryTree::RecursiveAdd(char key, Node* node)
 {
 	Node* tmp;
-	bool left;
+	bool left; //bool to check for left or right son of parent
 	if (key < node->key)
 	{
 		tmp =node->left;
@@ -100,9 +96,8 @@ void BinaryTree::RecursiveAdd(char key, Node* node)
 		tmp = node->right;
 		left = false;
 	}
-	if (!tmp)
+	if (!tmp) //if current node doesnt exit
 	{
-		Size++;
 		tmp = new Node();
 		tmp->key = key;
 		tmp->left = 0;
@@ -132,15 +127,16 @@ Sorter::Sorter(SortingAlgorithm* alg) :Algorithm(alg)
 
 Sorter::~Sorter()
 {
+	delete Algorithm;
 }
 
 void Sorter::SortData(char* data, int size)
 {
-	Algorithm->States.ClearStates();
-	Algorithm->States.ClearTimer();
-	Algorithm->States.StartTimer();
+	Algorithm->AlgorithmTracker.ClearStates();
+	Algorithm->AlgorithmTracker.ClearTimer();
+	Algorithm->AlgorithmTracker.StartTimer();
 	Algorithm->Sort(data, size);
-	Algorithm->States.PauseTimer();
+	Algorithm->AlgorithmTracker.PauseTimer();
 }
 
 void Sorter::ChangeAlgorithm(SortingAlgorithm* alg)
@@ -155,7 +151,7 @@ void Sorter::ChangeAlgorithm(SortingAlgorithm* alg)
 
 void BubbleSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	bool SwapHappened;
 	do {
 		SwapHappened = false;
@@ -165,7 +161,7 @@ void BubbleSort::Sort(char* data, int size)
 			{
 				swap(&data[i], &data[i+1]);
 				SwapHappened = true;
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 		}
 	} while (SwapHappened);
@@ -173,7 +169,7 @@ void BubbleSort::Sort(char* data, int size)
 
 void SelectionSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	for (size_t i = 0; i < size; i++)
 	{
 		int indexOfMin = i;
@@ -185,13 +181,13 @@ void SelectionSort::Sort(char* data, int size)
 			}
 		}
 		swap(&data[indexOfMin], &data[i]);
-		States.SaveCurrentState(data, size);
+		AlgorithmTracker.SaveCurrentState(data, size);
 	}
 }
 
 void InsertionSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	for (size_t i = 1; i < size; i++)
 	{
 		char current = data[i];
@@ -202,13 +198,13 @@ void InsertionSort::Sort(char* data, int size)
 			j--;
 		}
 		data[j + 1] = current;
-		States.SaveCurrentState(data, size);
+		AlgorithmTracker.SaveCurrentState(data, size);
 	}
 }
 
 void ShellSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	int step = size/2;
 	while (step > 0)
 	{
@@ -219,12 +215,10 @@ void ShellSort::Sort(char* data, int size)
 			while ((j >= 0) && (current < data[j]))
 			{
 				data[j + 1] = data[j];
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 				j--;
 			}
 			data[j + 1] = current;
-			
-
 		}
 		step = step / 2;
 	}
@@ -234,13 +228,12 @@ void ShellSort::Sort(char* data, int size)
 
 void QuickSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	RecursiveSort(data, size, 0, size-1);
 }
 
 void QuickSort::RecursiveSort(char* data, int size, int begin, int end)
 {
-
 	int i = begin, j = end;
 	int center = data[(begin + end) / 2];
 
@@ -255,7 +248,7 @@ void QuickSort::RecursiveSort(char* data, int size, int begin, int end)
 			if (i < j)
 			{
 				swap(&data[i], &data[j]);
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 			i++;
 			j--;
@@ -270,7 +263,7 @@ void QuickSort::RecursiveSort(char* data, int size, int begin, int end)
 
 void CoctailSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	bool SwapHappened;
 	int begin = 0;
 	int end = size;
@@ -282,7 +275,7 @@ void CoctailSort::Sort(char* data, int size)
 			{
 				swap(&data[i], &data[i + 1]);
 				SwapHappened = true;
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 		}
 		end--;
@@ -297,7 +290,7 @@ void CoctailSort::Sort(char* data, int size)
 			{
 				swap(&data[i], &data[i + 1]);
 				SwapHappened = true;
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 		}
 		begin++;
@@ -306,7 +299,7 @@ void CoctailSort::Sort(char* data, int size)
 
 void CombSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	double decreaseFactor = 1.247;
 	int step = size / decreaseFactor;
 
@@ -317,7 +310,7 @@ void CombSort::Sort(char* data, int size)
 			if (data[i +step] < data[i])
 			{
 				swap(&data[i], &data[i + step]);
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 		}
 		step = step / decreaseFactor;
@@ -331,44 +324,38 @@ void CombSort::Sort(char* data, int size)
 			if (data[i + 1] < data[i])
 			{
 				swap(&data[i], &data[i + 1]);
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 				SwapHappened = true;
 			}
 		}
 	} while (SwapHappened);
-
 }
 
 void TreeSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	BinaryTree tree;
 	for (int i = 0; i < size; i++)
 	{
 		tree.AddNode(data[i]);
 	}
 	tree.Linearize(data);
-	States.SaveCurrentState(data, size);
-
+	AlgorithmTracker.SaveCurrentState(data, size);
 }
 
 void HeapSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	for (int i = size/2; i >= 0; i--)
-	{
-		SiftDown(data,size, i, size-1);
-		
-	}
+		SiftDown(data,size, i, size-1);		
 
 	int end = size-1;
 	while (end > 0) {
 		swap(&data[0], &data[end]);
-		States.SaveCurrentState(data, size);
+		AlgorithmTracker.SaveCurrentState(data, size);
 		SiftDown(data,size, 0, end-1);
 		end--;
 	}
-
 }
 
 void HeapSort::SiftDown(char* data, int size, int begin, int end)
@@ -390,7 +377,7 @@ void HeapSort::SiftDown(char* data, int size, int begin, int end)
 				current = maxi;
 			}
 			else { break; }
-			States.SaveCurrentState(data, size);
+			AlgorithmTracker.SaveCurrentState(data, size);
 		}
 		else if(current * 2 + 1 <= end)
 		{
@@ -398,27 +385,24 @@ void HeapSort::SiftDown(char* data, int size, int begin, int end)
 			{
 				swap(&data[current], &data[current * 2 + 1]);
 				current = current * 2 + 1;
-				States.SaveCurrentState(data, size);
+				AlgorithmTracker.SaveCurrentState(data, size);
 			}
 			else break;
 		}
 		else {
 			break;
 		}
-
 	}
-
 }
 
 void MergeSort::Sort(char* data, int size)
 {
-	States.SaveCurrentState(data, size);
+	AlgorithmTracker.SaveCurrentState(data, size);
 	RecursiveSort(data, size, 0, size - 1);
 }
 
 void MergeSort::RecursiveSort(char* data, int size, int begin, int end)
 {
-
 	if (begin+1>end)
 	{
 		return;
@@ -428,10 +412,8 @@ void MergeSort::RecursiveSort(char* data, int size, int begin, int end)
 	RecursiveSort(data, size, center+1, end);
 	char* result = new char[end - begin+1];
 
-
 	int current1 = begin;
 	int current2 = center + 1;
-
 	for (int i = 0; i < (end-begin+1); i++)
 	{
 		if (current1<=center && current2 <= end)
@@ -461,11 +443,10 @@ void MergeSort::RecursiveSort(char* data, int size, int begin, int end)
 			}
 		}
 	}
-
 	for (size_t i = 0; i < (end - begin+1); i++)
 	{
 		data[begin+i] = result[i];
-		States.SaveCurrentState(data, size);
+		AlgorithmTracker.SaveCurrentState(data, size);
 	}
 	delete[] result;
 }

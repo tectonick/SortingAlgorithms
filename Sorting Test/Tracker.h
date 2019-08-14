@@ -10,7 +10,7 @@ class Tracker
 private:
 	clock_t startTime;
 	clock_t elapsedTime;
-	vector<char*>* States;
+	vector<char*>* AlgorithmTracker;
 public:
 	bool Visualizing;
 	void StartTimer();

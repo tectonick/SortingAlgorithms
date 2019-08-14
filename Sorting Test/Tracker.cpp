@@ -30,37 +30,39 @@ void Tracker::SaveCurrentState(char* data, int size)
 	}
 	PauseTimer();
 
+	//Copying current array
 	char* NewData = new char[size];
 	for (int i = 0; i < size; i++)
 	{
 		NewData[i] = data[i];
 	}
-	States->push_back(NewData);
+	AlgorithmTracker->push_back(NewData);
+
 	StartTimer();
 }
 
 char* Tracker::GetState(int i)
 {
-	return States->at(i);
+	return AlgorithmTracker->at(i);
 }
 
 void Tracker::ClearStates()
 {
 	for (int i = 0; i < StatesCount(); i++)
 	{
-		delete[] States->at(i);
+		delete[] AlgorithmTracker->at(i);
 	}
-	States->clear();
+	AlgorithmTracker->clear();
 }
 
 int Tracker::StatesCount()
 {
-	return States->size();
+	return AlgorithmTracker->size();
 }
 
 Tracker::Tracker()
 {
-	States = new vector<char*>;
+	AlgorithmTracker = new vector<char*>;
 	Visualizing = true;
 	startTime = 0;
 	elapsedTime = 0;
