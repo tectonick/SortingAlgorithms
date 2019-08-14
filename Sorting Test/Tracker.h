@@ -18,7 +18,7 @@ public:
 	void ClearTimer();
 	clock_t GetTime();
 
-	void SaveCurrentState(char* data, short size);
+	void SaveCurrentState(char* data, int size);
 	char* GetState(int i);
 	void ClearStates();
 	int StatesCount();

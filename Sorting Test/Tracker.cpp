@@ -22,7 +22,7 @@ clock_t Tracker::GetTime()
 	return elapsedTime;
 }
 
-void Tracker::SaveCurrentState(char* data, short size)
+void Tracker::SaveCurrentState(char* data, int size)
 {
 	if (this->Visualizing==false)
 	{
@@ -31,7 +31,7 @@ void Tracker::SaveCurrentState(char* data, short size)
 	PauseTimer();
 
 	char* NewData = new char[size];
-	for (size_t i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		NewData[i] = data[i];
 	}
@@ -46,7 +46,7 @@ char* Tracker::GetState(int i)
 
 void Tracker::ClearStates()
 {
-	for (size_t i = 0; i < StatesCount(); i++)
+	for (int i = 0; i < StatesCount(); i++)
 	{
 		delete[] States->at(i);
 	}

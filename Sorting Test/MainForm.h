@@ -27,7 +27,7 @@ namespace SortingTest {
 	public:
 		Sorter* s;
 
-		short ArraySize;
+		int ArraySize;
 		char*ResultArray;
 	private: System::Windows::Forms::ComboBox^ AlgorithmComboBox;
 	public:
@@ -358,13 +358,13 @@ namespace SortingTest {
 			return;
 		}
 		array<String^> ^ nums=InputTextBox->Text->Split(gcnew array<wchar_t> {' ', ','});
-		System::Collections::ArrayList ^ ints = gcnew System::Collections::ArrayList();
+		System::Collections::Generic::List<char> ^ ints = gcnew System::Collections::Generic::List<char>();
 		for each (String ^ s in nums)
 		{
-			short ParseResult;
-			if (System::Int16::TryParse(s,ParseResult))
+			int ParseResult;
+			if (System::Int32::TryParse(s,ParseResult))
 			{
-				ints->Add((char)ParseResult);
+				ints->Add(ParseResult);
 			}		
 			
 		}
