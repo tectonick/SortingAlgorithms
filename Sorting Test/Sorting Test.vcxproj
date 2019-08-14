@@ -105,6 +105,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,6 +142,7 @@
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="SortingAlgorithms.cpp" />
+    <ClCompile Include="Tracker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawer.h" />
@@ -147,6 +150,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="SortingAlgorithms.h" />
+    <ClInclude Include="Tracker.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">

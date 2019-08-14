@@ -1,31 +1,8 @@
 #pragma once
-#include <vector>
-#include <ctime>
-
-using std::vector;
-using std::clock_t;
+#include "Tracker.h"
 
 
-class Tracker
-{
-private:
-	clock_t startTime;
-	clock_t elapsedTime;
-	vector<char*>* States;
-public:
-	void StartTimer();
-	void PauseTimer();
-	void ClearTimer();
-	clock_t GetTime();
 
-	void SaveCurrentState(char* data, short size);
-	char* GetState(int i);
-	void ClearStates();
-	int StatesCount();
-
-	Tracker();
-	~Tracker();
-};
 
 class SortingAlgorithm
 {

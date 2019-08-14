@@ -381,6 +381,9 @@ namespace SortingTest {
 		{
 			ResultArray[i] = (char) ints[i];
 		}
+
+		s->Algorithm->States.Visualizing = (ArraySize > 1000) ? false : true;
+		
 		s->SortData(ResultArray, ArraySize);
 		d->DrawArray(ResultArray, ArraySize);
 
@@ -402,11 +405,12 @@ namespace SortingTest {
 			OutputTextBox->Text += " ";
 		}
 		*/
-		OutputTextBox->Text += " ("+s->Algorithm->States.GetTime().ToString()+" ms)";
+		OutputTextBox->Text += " ("+s->Algorithm->States.GetTime().ToString()+" CPU cycles)";
 		
 		StatesTrackBar->Maximum = s->Algorithm->States.StatesCount()-1;
 		StatesTrackBar->Value = StatesTrackBar->Maximum;
-		CountLabel->Text = StatesTrackBar->Value.ToString();
+
+		CountLabel->Text = (ArraySize > 1000) ? "Visualization of states is disabled for arrays of size>1000" : StatesTrackBar->Value.ToString();
 		
 		
 	}
