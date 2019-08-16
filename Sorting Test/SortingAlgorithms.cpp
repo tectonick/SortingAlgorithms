@@ -205,22 +205,30 @@ void InsertionSort::Sort(char* data, int size)
 void ShellSort::Sort(char* data, int size)
 {
 	AlgorithmTracker.SaveCurrentState(data, size);
-	int step = size/2;
-	while (step > 0)
+	vector<int> SedgewickSeq;
+	int SeqElement=0;
+	for (int i = 0; SeqElement < size; i++)
 	{
-		for (int i = 1; i < size; i++)
+		SeqElement = (i % 2 == 0) ? (9*pow(2,i)-9*pow(2,i/2)+1) : (8 * pow(2, i) - 6 * pow(2, (i+1)/ 2) + 1) ;
+		SedgewickSeq.push_back(SeqElement);
+	}
+	SedgewickSeq.pop_back();
+	while (SedgewickSeq.size()>0)
+	{
+		int step = SedgewickSeq.back();
+		SedgewickSeq.pop_back();
+		for (int i = step; i < size; i++)
 		{
 			char current = data[i];
-			int j = i - 1;
+			int j = i - step;
 			while ((j >= 0) && (current < data[j]))
 			{
-				data[j + 1] = data[j];
-				AlgorithmTracker.SaveCurrentState(data, size);
-				j--;
+				data[j + step] = data[j];
+				j-= step;
 			}
-			data[j + 1] = current;
+			data[j + step] = current;
+			AlgorithmTracker.SaveCurrentState(data, size);
 		}
-		step = step / 2;
 	}
 }
 
