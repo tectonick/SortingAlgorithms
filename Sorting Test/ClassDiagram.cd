@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="SortingAlgorithm">
+    <Position X="16.5" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="AlgorithmTracker" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BubbleSort" Collapsed="true">
+    <Position X="15.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoctailSort" Collapsed="true">
+    <Position X="18" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CombSort" Collapsed="true">
+    <Position X="18" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectionSort" Collapsed="true">
+    <Position X="15.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InsertionSort" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShellSort" Collapsed="true">
+    <Position X="18" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuickSort">
+    <Position X="18" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeSort" Collapsed="true">
+    <Position X="15.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HeapSort">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MergeSort">
+    <Position X="18" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sorter">
+    <Position X="12.75" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAACAAAAAAAAAAAgAAAgAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>SortingAlgorithms.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Algorithm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Tracker">
+    <Position X="20.25" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AQAABEAAAQAAgAAABAAgAAAQAAAAAACAgBBAAgAAACA=</HashCode>
+      <FileName>Tracker.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

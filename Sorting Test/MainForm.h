@@ -367,7 +367,6 @@ namespace SortingTest {
 		}
 		str = ss.str();
 		OutputTextBox->Text = gcnew String(str.c_str());
-		//OutputTextBox->Text += " (" + MySorter->Algorithm->AlgorithmTracker.GetTime().ToString() + " CPU cycles)";
 		StatesTrackBar->Maximum = MySorter->Algorithm->AlgorithmTracker.StatesCount() - 1;
 		StatesTrackBar->Value = StatesTrackBar->Maximum;
 		CountLabel->Text = (ArraySize > 1000) ? "Visualization of states is disabled for arrays of size>1000" : StatesTrackBar->Value.ToString();
